@@ -7,6 +7,7 @@ import (
   // "strconv"
   "github.com/spf13/cobra"
   "os"
+  "github.com/lpedenon/habit/cmd"
 ) 
 
 func main() {
@@ -14,6 +15,8 @@ func main() {
     Use: "habit",
     Short: "Simple habit tracker",
   }
+
+  rootCmd.AddCommand(cmd.AddCmd)
 
   if err := rootCmd.Execute(); err != nil {
         os.Exit(1)
