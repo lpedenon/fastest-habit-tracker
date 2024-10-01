@@ -17,6 +17,7 @@ func main() {
   }
 
   rootCmd.AddCommand(cmd.AddCmd)
+  rootCmd.AddCommand(cmd.ListCmd)
 
   if err := rootCmd.Execute(); err != nil {
         os.Exit(1)
