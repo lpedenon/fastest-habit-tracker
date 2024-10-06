@@ -26,7 +26,10 @@ var AddCmd = &cobra.Command{
 		dataDir := filepath.Join(currentDir, "data")
 		filePath := filepath.Join(dataDir, "habits.csv")
 
-		writeToCsv(filePath, task, true)
+		err = writeToCsv(filePath, task, true)
+		if err != nil {
+			fmt.Println("error writing to csv")
+		}
 
 	},
 }

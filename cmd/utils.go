@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	// "path/filepath"
+	"encoding/csv"
 	"strings"
 	"time"
 )
@@ -55,4 +56,18 @@ func writeToCsv(filePath string, data [][]string, append bool) error {
 		}
 	}
 	return nil
+}
+
+func readFromCsv(filePath string) ([][]string, error) {
+	file, err := os.Open(filePath)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+	reader := csv.NewReader(file)
+	records, err := reader.ReadAll()
+	if err != nil {
+		return nil, err
+	}
+	return records, nil
 }
