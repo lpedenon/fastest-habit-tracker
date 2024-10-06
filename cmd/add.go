@@ -11,9 +11,9 @@ import (
 var AddCmd = &cobra.Command{
   Use: "add [task]",
   Short: "add a new habit",
-  Args: cobra.MinimumNArgs(1),
+  Args: cobra.ExactArgs(5),
   Run: func(cmd *cobra.Command, args []string) {
-    task := args[0]
+    task := append(args, "false");
     fmt.Printf("added task %s\n", task)
 
     // get current dir
@@ -39,7 +39,7 @@ var AddCmd = &cobra.Command{
     defer writer.Flush()  // ensures all data is written (always include this) because writer keeps buffer
 
     //write task to csv
-    err = writer.Write([]string{task})
+    err = writer.Write(task)
     if err != nil {
       fmt.Println("error writing to file", err)
     } else {
@@ -48,4 +48,5 @@ var AddCmd = &cobra.Command{
 
   },
 }
+
 
