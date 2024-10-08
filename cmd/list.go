@@ -50,7 +50,7 @@ var ListCmd = &cobra.Command{
 				continue
 			}
 			if record[5] == "false" {
-				fmt.Printf("%d: %s\n", i, record[0])
+				fmt.Printf("%d: %s - streak %s\n", i, record[0], record[3])
 			}
 		}
 

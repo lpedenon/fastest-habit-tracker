@@ -1,2 +1,5 @@
-supplements
-meditate
+habit,attemptsRequired,daysOfWeek,streak,lastCompletedDate,false
+meditate,2,MTWTFSN,1,2024-10-07,false
+supplements,2,MTWTFSTN,0,2024-10-05,false
+cardio,1,MTWTFSN,0,2024-10-07,false
+code,1,MTWTFSN,0,2024-10-07,false

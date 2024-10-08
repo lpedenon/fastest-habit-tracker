@@ -10,9 +10,9 @@ import (
 var AddCmd = &cobra.Command{
 	Use:   "add [task]",
 	Short: "add a new habit",
-	Args:  cobra.ExactArgs(5),
+	Args:  cobra.ExactArgs(3),
 	Run: func(cmd *cobra.Command, args []string) {
-		task := [][]string{append(args, "false")}
+		task := [][]string{append(args, "0", currentDate(), "false")}
 		fmt.Printf("added task %s\n", task)
 
 		// get current dir
