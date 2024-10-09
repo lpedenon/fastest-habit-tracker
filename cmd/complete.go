@@ -62,7 +62,7 @@ var CompleteCmd = &cobra.Command{
 				yesterday := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location()).AddDate(0, 0, -2)
 
 				if lastCompletedTime.Before(yesterday) {
-					record[3] = "0"
+					record[3] = "1"
 				} else {
 					record[3] = string(int(record[3][0]) + 1)
 				}
