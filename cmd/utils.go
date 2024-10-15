@@ -11,7 +11,7 @@ import (
 
 type Habit struct {
 	name          string
-	daysOfWeek    []string
+	daysOfWeek    []weekday
 	streak        string
 	lastCompleted string
 	completed     bool
@@ -19,16 +19,76 @@ type Habit struct {
 
 type Habits []Habit
 
+type weekday int
+
+const (
+	Monday weekday = iota
+	Tuesday
+	Wednesday
+	Thursday
+	Friday
+	Saturday
+	Sunday
+)
+
+func mapToWeekday(day string) weekday {
+	switch day {
+	case "M":
+		return Monday
+	case "T":
+		return Tuesday
+	case "W":
+		return Wednesday
+	case "R":
+		return Thursday
+	case "F":
+		return Friday
+	case "S":
+		return Saturday
+	case "N":
+		return Sunday
+	default:
+		return -1 // Invalid day
+	}
+}
+
+func (w weekday) String() string {
+	switch w {
+	case Monday:
+		return "M"
+	case Tuesday:
+		return "T"
+	case Wednesday:
+		return "W"
+	case Thursday:
+		return "R"
+	case Friday:
+		return "F"
+	case Saturday:
+		return "S"
+	case Sunday:
+		return "N"
+	default:
+		return ""
+	}
+}
+
 func loadHabits(filePath string) (Habits, error) {
 	records, err := readFromCsv(filePath)
 	if err != nil {
 		return nil, err
 	}
+
 	habits := make(Habits, 0)
 	for _, record := range records[1:] {
+		days := strings.Split(record[1], "")
+		var daysOfWeek []weekday
+		for _, day := range days {
+			daysOfWeek = append(daysOfWeek, mapToWeekday(day))
+		}
 		habit := Habit{
 			name:          record[0],
-			daysOfWeek:    strings.Split(record[1], ""),
+			daysOfWeek:    daysOfWeek,
 			streak:        record[2],
 			lastCompleted: record[3],
 			completed:     record[4] == "true",
@@ -41,10 +101,16 @@ func loadHabits(filePath string) (Habits, error) {
 func (habits Habits) save(filePath string) error {
 	data := make([][]string, 0)
 	data = append(data, []string{"name", "daysOfWeek", "streak", "lastCompleted", "completed"})
+
 	for _, habit := range habits {
+		var daysOfWeekStrings []string
+		for _, day := range habit.daysOfWeek {
+			daysOfWeekStrings = append(daysOfWeekStrings, day.String())
+		}
+
 		data = append(data, []string{
 			habit.name,
-			strings.Join(habit.daysOfWeek, ""),
+			strings.Join(daysOfWeekStrings, ""),
 			habit.streak,
 			habit.lastCompleted,
 			fmt.Sprintf("%t", habit.completed),
