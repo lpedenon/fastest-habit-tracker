@@ -22,36 +22,18 @@ var ListCmd = &cobra.Command{
 		// get data dirpath
 		dataDir := filepath.Join(currentDir, "data")
 		filePath := filepath.Join(dataDir, "habits.csv")
-		lastUpdatedFilePath := filepath.Join(dataDir, "last_updated.txt")
 
-		// get records from csv
-		records, err := readFromCsv(filePath)
-		if err != nil {
-			fmt.Println("error reading from csv", err)
-			return
-		}
+		habits, err := loadHabits(filePath)
 
-		if !isLastUpdatedToday(lastUpdatedFilePath) {
-			err = writeLastUpdatedDate(lastUpdatedFilePath)
-			if err != nil {
-				fmt.Println("error writing last updated date", err)
-				return
+		for _, habit := range habits {
+			if !habit.isLastCompletedToday() {
+				habit.completed = false
 			}
-
-			for _, record := range records {
-				record[5] = "false"
-			}
-			err = writeToCsv(filePath, records, false)
-		}
-
-		for i, record := range records {
-			// skip header
-			if i == 0 {
+			if habit.completed {
 				continue
 			}
-			if record[5] == "false" {
-				fmt.Printf("%d: %s - streak %s\n", i, record[0], record[3])
-			}
+
+			fmt.Printf("%s - streak %s\n", habit.name, habit.streak)
 		}
 
 	},

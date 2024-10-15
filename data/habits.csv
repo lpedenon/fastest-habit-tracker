@@ -1,5 +1,6 @@
-habit,attemptsRequired,daysOfWeek,streak,lastCompletedDate,false
-meditate,2,MTWTFSN,1,2024-10-09,false
-supplements,2,MTWTFSTN,2,2024-10-10,true
-cardio,1,MTWTFSN,1,2024-10-10,true
-code,1,MTWTFSN,1,2024-10-09,false
+name,daysOfWeek,streak,lastCompleted,completed
+meditate,MTWTFSN,1,2024-10-09,false
+supplements,MTWTFSTN,1,2024-10-14,true
+cardio,MTWTFSN,1,2024-10-14,true
+code,MTWTFSN,1,2024-10-15,true
+WSJ,MTWTFSN,0,2024-10-13,false

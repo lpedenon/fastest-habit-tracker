@@ -9,6 +9,54 @@ import (
 	"time"
 )
 
+type Habit struct {
+	name          string
+	daysOfWeek    []string
+	streak        string
+	lastCompleted string
+	completed     bool
+}
+
+type Habits []Habit
+
+func loadHabits(filePath string) (Habits, error) {
+	records, err := readFromCsv(filePath)
+	if err != nil {
+		return nil, err
+	}
+	habits := make(Habits, 0)
+	for _, record := range records[1:] {
+		habit := Habit{
+			name:          record[0],
+			daysOfWeek:    strings.Split(record[1], ""),
+			streak:        record[2],
+			lastCompleted: record[3],
+			completed:     record[4] == "true",
+		}
+		habits = append(habits, habit)
+	}
+	return habits, nil
+}
+
+func (habits Habits) save(filePath string) error {
+	data := make([][]string, 0)
+	data = append(data, []string{"name", "daysOfWeek", "streak", "lastCompleted", "completed"})
+	for _, habit := range habits {
+		data = append(data, []string{
+			habit.name,
+			strings.Join(habit.daysOfWeek, ""),
+			habit.streak,
+			habit.lastCompleted,
+			fmt.Sprintf("%t", habit.completed),
+		})
+	}
+	return writeToCsv(filePath, data, false)
+}
+
+func (habit Habit) isLastCompletedToday() bool {
+	return currentDate() == habit.lastCompleted
+}
+
 func currentDate() string {
 	return time.Now().Format("2006-01-02")
 }
