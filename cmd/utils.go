@@ -11,7 +11,7 @@ import (
 
 type Habit struct {
 	name          string
-	daysOfWeek    []weekday
+	daysOfWeek    []time.Weekday
 	streak        string
 	lastCompleted string
 	completed     bool
@@ -31,45 +31,45 @@ const (
 	Sunday
 )
 
-func mapToWeekday(day string) weekday {
+func mapToWeekday(day string) time.Weekday {
 	switch day {
 	case "M":
-		return Monday
+		return time.Monday
 	case "T":
-		return Tuesday
+		return time.Tuesday
 	case "W":
-		return Wednesday
+		return time.Wednesday
 	case "R":
-		return Thursday
+		return time.Thursday
 	case "F":
-		return Friday
+		return time.Friday
 	case "S":
-		return Saturday
+		return time.Saturday
 	case "N":
-		return Sunday
+		return time.Sunday
 	default:
 		return -1 // Invalid day
 	}
 }
 
-func (w weekday) String() string {
-	switch w {
-	case Monday:
+func mapToString(day time.Weekday) string {
+	switch day {
+	case time.Monday:
 		return "M"
-	case Tuesday:
+	case time.Tuesday:
 		return "T"
-	case Wednesday:
+	case time.Wednesday:
 		return "W"
-	case Thursday:
+	case time.Thursday:
 		return "R"
-	case Friday:
+	case time.Friday:
 		return "F"
-	case Saturday:
+	case time.Saturday:
 		return "S"
-	case Sunday:
+	case time.Sunday:
 		return "N"
 	default:
-		return ""
+		panic("invalid day")
 	}
 }
 
@@ -82,7 +82,7 @@ func loadHabits(filePath string) (Habits, error) {
 	habits := make(Habits, 0)
 	for _, record := range records[1:] {
 		days := strings.Split(record[1], "")
-		var daysOfWeek []weekday
+		var daysOfWeek []time.Weekday
 		for _, day := range days {
 			daysOfWeek = append(daysOfWeek, mapToWeekday(day))
 		}
@@ -105,7 +105,7 @@ func (habits Habits) save(filePath string) error {
 	for _, habit := range habits {
 		var daysOfWeekStrings []string
 		for _, day := range habit.daysOfWeek {
-			daysOfWeekStrings = append(daysOfWeekStrings, day.String())
+			daysOfWeekStrings = append(daysOfWeekStrings, mapToString(day))
 		}
 
 		data = append(data, []string{

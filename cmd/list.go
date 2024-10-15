@@ -5,6 +5,7 @@ import (
 	"github.com/spf13/cobra"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 var ListCmd = &cobra.Command{
@@ -25,16 +26,20 @@ var ListCmd = &cobra.Command{
 
 		habits, err := loadHabits(filePath)
 
-		for _, habit := range habits {
+		for i, habit := range habits {
 			if !habit.isLastCompletedToday() {
-				habit.completed = false
+				habits[i].completed = false
 			}
 			if habit.completed {
 				continue
 			}
 
-			fmt.Printf("%s - streak %s\n", habit.name, habit.streak)
+			for _, day := range habit.daysOfWeek {
+				if day == time.Now().Weekday() {
+					fmt.Printf("%s - streak %s\n", habit.name, habit.streak)
+				}
+			}
 		}
-
+		habits.save(filePath)
 	},
 }

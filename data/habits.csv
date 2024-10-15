@@ -1,6 +1,8 @@
 name,daysOfWeek,streak,lastCompleted,completed
 meditate,MTWRFSN,1,2024-10-09,false
-supplements,MTWRFSTN,1,2024-10-14,true
-cardio,MTWRFSN,1,2024-10-14,true
+supplements,MTWRFSN,2,2024-10-15,true
+cardio,MTWRFSN,1,2024-10-14,false
 code,MTWRFSN,1,2024-10-15,true
 WSJ,MTWRFSN,0,2024-10-13,false
+hair routine,TF,0,2024-10-09,false
+clean,N,0,2024-10-05,false
