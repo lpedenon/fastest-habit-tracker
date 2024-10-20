@@ -30,7 +30,7 @@ var ListCmd = &cobra.Command{
 			if !habit.isLastCompletedToday() {
 				habits[i].completed = false
 			}
-			if habit.completed {
+			if habits[i].completed {
 				continue
 			}
 

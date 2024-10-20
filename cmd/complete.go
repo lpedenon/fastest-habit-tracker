@@ -46,7 +46,9 @@ var CompleteCmd = &cobra.Command{
 				lastCompletedTime = time.Date(lastCompletedTime.Year(), lastCompletedTime.Month(), lastCompletedTime.Day(), 0, 0, 0, 0, lastCompletedTime.Location())
 				now := time.Now()
 
-				yesterday := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location()).AddDate(0, 0, -2)
+				dayDifferential := now.Weekday() - lastCompletedTime.Weekday()
+
+				yesterday := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location()).AddDate(0, 0, -(int(dayDifferential))-1)
 
 				if lastCompletedTime.Before(yesterday) {
 					habits[i].streak = "1"

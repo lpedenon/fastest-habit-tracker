@@ -20,6 +20,7 @@ func main() {
 	rootCmd.AddCommand(cmd.ListCmd)
 	rootCmd.AddCommand(cmd.CompleteCmd)
 	rootCmd.AddCommand(cmd.StreakCmd)
+	rootCmd.AddCommand(cmd.PerfectCmd)
 
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
